@@ -8,36 +8,43 @@
 		</script>
 		<script type="text/javascript" src="../js/fechas.js">
 		</script>
-		<link rel="stylesheet" 
-			  href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation-flex.css" 
-			  />
-	</head>
-	<body>
-		<div class="row">
-			<div class="small-2 large-4 columns"></div>
-			<div class="small-4 large-4 columns">
-				<h1 class="h3"></h1>
-				<form>
-					<label>Fecha</label>
-					<div class="input-group">
-						<input class="input-group-field" id="sample" type="text">
-						<div class="input-group-button">
-							<input id="ver" type="submit" class="button" value="Validar">
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation-flex.css"
+			/>
+		</head>
+		<body>
+			<div class="row">
+				<div class="small-2 large-4 columns"></div>
+				<div class="small-4 large-4 columns">
+					<h1 class="h3"></h1>
+					<form>
+						<label>Fecha</label>
+						<div class="input-group">
+							<input class="input-group-field" id="sample" type="text" placeholder="Ej. 27 mayo, 1977">
+							<div class="input-group-button">
+								<input id="ver" type="submit" class="button" value="Validar">
+							</div>
 						</div>
-					</div>
-					<p class="help-text" id="passwordHelpText">
-					Ej. 27/5/1977, 27 de mayo de 1977 ó mayo 27, 1977
-					</p>
-					
-				</form>
-				<h2 id="fecha" style="color:#1583cc; font-size: 1.5em; text-transform: capitalize;
-				"></h2>
-				<div><input type="text" readonly="readonly" id="read" value="" name=""></div>
-				<div id="debug"></div>
+						<p class="help-text" id="passwordHelpText">
+							Ej. 27/5/1977, 27 de mayo de 1977 ó mayo 27, 1977
+						</p>
+						<hr /><p>Atajos</p>
+						<div class="expanded button-group">
+							<button type="button" class="secondary button quick" data-action="ayer">Ayer</button>
+							<button type="button" class="secondary button quick" data-action="hoy">Hoy</button>
+							<button type="button" class="secondary button quick" data-action="mañana">Mañana</button>
+						</div>
+						
+					</form>
+					<h2 id="fecha" style="color:#1583cc; font-size: 1.5em; text-transform: capitalize;
+					"></h2>
+					<hr/>
+					<div><input type="text" readonly="readonly" id="read" value="" name=""></div>
+					<div id="debug"></div>
+				</div>
+				<div class="small-6 large-4 columns"></div>
 			</div>
-			<div class="small-6 large-4 columns"></div>
-		</div>
-		<script type="text/javascript" src="assets/js/demo.js">
-		</script>
-	</body>
-</html>
+			<script type="text/javascript" src="assets/js/demo.js">
+			</script>
+		</body>
+	</html>

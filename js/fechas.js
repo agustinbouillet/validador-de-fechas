@@ -99,18 +99,56 @@ function Fechas(str) {
             normal: 'sábado'
         }
     };
+    this.numeros = {
+        'un': 1,
+        'uno': 1,
+        'dos': 2,
+        'tres': 3,
+        'cuatro': 4,
+        'cinco': 5,
+        'seis': 6,
+        'siete': 7,
+        'ocho': 8,
+        'nueve': 9,
+        'diez': 10
+    }
 
 }
 
 function matchFormat() {
-    var re = /^((3[0-1]|[0-2][\d]|[1-9])(?:\s[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9])\9(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:\s|[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])|([\d]{4})(\-|\/|\.)(1[0-2]|0[\d]|[1-9])\17(3[0-1]|[0-2][\d]|[1-9])|(hoy|now|today)|(mañana|manana|tomorrow)|(ayer|yesterday))$/i;
+    var re = /^((3[0-1]|[0-2][\d]|[1-9])(?:\s[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9])\9(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:\s|[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])|([\d]{4})(\-|\/|\.)(1[0-2]|0[\d]|[1-9])\17(3[0-1]|[0-2][\d]|[1-9])|(hoy|today)|(mañana|manana|tomorrow)|(ayer|yesterday)|(h?ace|\-)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(en|\+)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*)$/i;
     var result = this.input.match(re);
 
     if (result !== null) {
         return result;
     }
 
+    // return false;
+}
+
+/**
+ * Calcula si un año es bisiesto
+ * @param  {integer}  year
+ * @return {Boolean}
+ */
+function isBisiesto(year) {
+    if ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))) {
+        return true;
+    }
+
     return false;
+}
+/**
+ * [dayRange description]
+ * 30 dias tiene noviembre con abril junio y septiembre solo uno de 28 y 
+ * los demas de 31 :)
+ * @return {[type]} [description]
+ */
+function dayRange() {
+
+    var d31 = [1, 3, 5, 7, 8, 10, 12];
+    var d30 = [11, 4, 6, 9];
+
 }
 
 /**
@@ -125,21 +163,23 @@ function addDays(date, days) {
 }
 
 
-
-function intMonth(num) {
+function between(num, from, to) {
     n = parseInt(num);
-    if (Number.isInteger(n) && n > 0 && n <= 12) {
+    if (Number.isInteger(n) && n > from && n <= to) {
         return n;
     }
     return false;
 }
 
 
+
 function strReplace(str) {
 
-    if (num = intMonth(str)) {
+    if (num = between(str, 1, 12)) {
         return num;
     }
+
+    var str = str.toLowerCase();
 
     var match;
     var reps = {
@@ -178,7 +218,7 @@ function strReplace(str) {
 
 
 function setData() {
-
+    
     if (!this.isValid) {
         return false;
     }
@@ -244,16 +284,52 @@ function setData() {
         var year = tomorrow.getFullYear();
     }
 
+    // Si se escribió "h?ace n" dias.
+    if (result[25] !== undefined) {
+        tomorrow = addDays(this.date, - parseInt(result[25]));
+        var day = tomorrow.getDate();
+        var month = tomorrow.getMonth() + 1;
+        var year = tomorrow.getFullYear();
+    }
+
+    // Si se escribió "hace un/uno" dias.
+    if (result[26] !== undefined) {
+        var tomorrow = addDays(this.date, -this.numeros[result[26]]);
+        var day = tomorrow.getDate();
+        var month = tomorrow.getMonth() + 1;
+        var year = tomorrow.getFullYear();
+    }
+
+    // Si se escribió "en n" dias.
+    if (result[29] !== undefined) {
+        console.log(typeof(result[29]));
+        var tomorrow = addDays(this.date, parseInt(result[29]));
+        var day = tomorrow.getDate();
+        var month = tomorrow.getMonth() + 1;
+        var year = tomorrow.getFullYear();
+    }
+
+    // Si se escribió "en un/uno" dias...
+    if (result[30] !== undefined || result[30]) {
+        var tomorrow = addDays(this.date, this.numeros[result[30]]);
+        var day = tomorrow.getDate();
+        var month = tomorrow.getMonth() + 1;
+        var year = tomorrow.getFullYear();
+    }
+
+
+
     date_obj = new Date(year, month - 1, day);
 
+    // Praparo la información de retrono
     var data = {
         day: date_obj.getDay(),
         day_tostring: this.day_format[date_obj.getDay()],
         month_tostring: this.month_format[month],
         date: day,
         month: month,
-        year: year,
-        date_format: year + sep + zeroFill(month, 2) + sep + zeroFill(day, 2),
+        year: date_obj.getFullYear(),
+        date_format: date_obj.getFullYear() + sep + zeroFill(month, 2) + sep + zeroFill(day, 2),
     }
 
     return data

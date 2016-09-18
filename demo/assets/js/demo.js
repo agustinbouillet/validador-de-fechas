@@ -1,7 +1,7 @@
 function draw(str) {
 	$('#debug').empty();
 	var a = $('#resultados');
-	$('#debug').append('<h2>Return</h2>');
+	$('#debug').append('<hr /><h2 style="color: #ccc; font-size:1.25rem">Return</h2>');
 
 	d = new Fechas(str);
 
@@ -20,9 +20,19 @@ function draw(str) {
 		}).appendTo('#debug');
 
 		for (i in data) {
-			$('#debug_results').append(
-				'<tr><td>' + i + '</td><td>' + data[i] + '</td>'
-			);
+
+			if (typeof(data[i]) === 'object') {
+
+				for (k in data[i]) {
+					$('#debug_results').append(
+						'<tr><td>' + i + '.' + k + '</td><td>' + data[i][k] + '</td>'
+					);
+				}
+			} else {
+				$('#debug_results').append(
+					'<tr><td>' + i + '</td><td>' + data[i] + '</td>'
+				);
+			}
 		}
 
 	} else {
@@ -39,6 +49,14 @@ $('#sample').keydown(function() {
 	$('#resultados').fadeOut();
 	$('#debug').empty();
 });
+
+$('.quick').click(function(e){
+	e.preventDefault();
+	var valor = $(this).data('action');
+	$('#sample').val(valor);
+	draw($('#sample').val());
+});
+
 
 $('#ver').click(function(e) {
 	e.preventDefault();
