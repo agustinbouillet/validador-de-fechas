@@ -115,9 +115,22 @@ function Fechas(str) {
 
 }
 
+/**
+ * hace un string trim e impide que haya mas de un espacio entre palabras.
+ * @param  {string} str
+ * @return {string}
+ */
+function cleanup(str) {
+    var re = /(^\s*|\s(?=\s+)|\s*$)/g;
+    var subst = '';
+    var result = str.replace(re, subst);
+    return result;
+}
+
 function matchFormat() {
-    var re = /^((3[0-1]|[0-2][\d]|[1-9])(?:\s[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9])\9(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:\s|[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])|([\d]{4})(\-|\/|\.)(1[0-2]|0[\d]|[1-9])\17(3[0-1]|[0-2][\d]|[1-9])|(hoy|today)|(mañana|manana|tomorrow)|(ayer|yesterday)|(h?ace|\-)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(en|\+)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*)$/i;
-    var result = this.input.match(re);
+    var re = /^((3[0-1]|[0-2][\d]|[1-9])(?:\s|[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9])\9(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:\s|[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])|([\d]{4})(\-|\/|\.)(1[0-2]|0[\d]|[1-9])\17(3[0-1]|[0-2][\d]|[1-9])|(hoy|today)|(mañana|manana|tomorrow)|(ayer|yesterday)|(h?ace|\-)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(en|\+)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*)$/i;
+    var input = cleanup(this.input);
+    var result = input.match(re);
 
     if (result !== null) {
         return result;
