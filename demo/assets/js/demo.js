@@ -50,7 +50,7 @@ $('#sample').keydown(function() {
 	$('#debug').empty();
 });
 
-$('.quick').click(function(e){
+$('.quick').click(function(e) {
 	e.preventDefault();
 	var valor = $(this).data('action');
 	$('#sample').val(valor);

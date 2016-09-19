@@ -218,7 +218,7 @@ function strReplace(str) {
 
 
 function setData() {
-    
+
     if (!this.isValid) {
         return false;
     }
@@ -286,7 +286,7 @@ function setData() {
 
     // Si se escribió "h?ace n" dias.
     if (result[25] !== undefined) {
-        tomorrow = addDays(this.date, - parseInt(result[25]));
+        tomorrow = addDays(this.date, -parseInt(result[25]));
         var day = tomorrow.getDate();
         var month = tomorrow.getMonth() + 1;
         var year = tomorrow.getFullYear();
@@ -294,7 +294,9 @@ function setData() {
 
     // Si se escribió "hace un/uno" dias.
     if (result[26] !== undefined) {
-        var tomorrow = addDays(this.date, -this.numeros[result[26]]);
+        var tomorrow = addDays(
+            this.date, -this.numeros[result[26].toLowerCase()]
+        );
         var day = tomorrow.getDate();
         var month = tomorrow.getMonth() + 1;
         var year = tomorrow.getFullYear();
@@ -302,7 +304,6 @@ function setData() {
 
     // Si se escribió "en n" dias.
     if (result[29] !== undefined) {
-        console.log(typeof(result[29]));
         var tomorrow = addDays(this.date, parseInt(result[29]));
         var day = tomorrow.getDate();
         var month = tomorrow.getMonth() + 1;
@@ -311,13 +312,12 @@ function setData() {
 
     // Si se escribió "en un/uno" dias...
     if (result[30] !== undefined || result[30]) {
-        var tomorrow = addDays(this.date, this.numeros[result[30]]);
+        var tomorrow = addDays(this.date,
+            this.numeros[result[30].toLowerCase()]);
         var day = tomorrow.getDate();
         var month = tomorrow.getMonth() + 1;
         var year = tomorrow.getFullYear();
     }
-
-
 
     date_obj = new Date(year, month - 1, day);
 
@@ -329,7 +329,8 @@ function setData() {
         date: day,
         month: month,
         year: date_obj.getFullYear(),
-        date_format: date_obj.getFullYear() + sep + zeroFill(month, 2) + sep + zeroFill(day, 2),
+        date_format: date_obj.getFullYear() + sep + zeroFill(month, 2) +
+            sep + zeroFill(day, 2),
     }
 
     return data
