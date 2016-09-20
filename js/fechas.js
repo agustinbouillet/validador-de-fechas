@@ -99,20 +99,6 @@ function Fechas(str) {
             normal: 'sábado'
         }
     };
-    this.numeros = {
-        'un': 1,
-        'uno': 1,
-        'dos': 2,
-        'tres': 3,
-        'cuatro': 4,
-        'cinco': 5,
-        'seis': 6,
-        'siete': 7,
-        'ocho': 8,
-        'nueve': 9,
-        'diez': 10
-    }
-
 }
 
 /**
@@ -127,8 +113,12 @@ function cleanup(str) {
     return result;
 }
 
+/**
+ * [matchFormat description]
+ * @return {[type]} [description]
+ */
 function matchFormat() {
-    var re = /^((3[0-1]|[0-2][\d]|[1-9])(?:\s|[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9])\9(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:\s|[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])|([\d]{4})(\-|\/|\.)(1[0-2]|0[\d]|[1-9])\17(3[0-1]|[0-2][\d]|[1-9])|(hoy|today)|(mañana|manana|tomorrow)|(ayer|yesterday)|(h?ace|\-)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(en|\+)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*)$/i;
+    var re = /^((3[0-1]|[0-2][\d]|[1-9])(?:\s|[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9])\9(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:\s|[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])|([\d]{4})(\-|\/|\.)(1[0-2]|0[\d]|[1-9])\17(3[0-1]|[0-2][\d]|[1-9])|(hoy|today)|(mañana|manana|tomorrow)|(ayer|yesterday)|(h?ace|\-)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(en|\+)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9]))$/i;
     var input = cleanup(this.input);
     var result = input.match(re);
 
@@ -158,10 +148,8 @@ function isBisiesto(year) {
  * @return {[type]} [description]
  */
 function dayRange() {
-
     var d31 = [1, 3, 5, 7, 8, 10, 12];
     var d30 = [11, 4, 6, 9];
-
 }
 
 /**
@@ -171,31 +159,66 @@ function dayRange() {
  */
 function addDays(date, days) {
     var result = new Date(date);
-    result.setDate(date.getDate() + days);
+    result.setDate(date.getDate() + parseInt(days));
     return result;
 }
 
-
+/**
+ * Verifica que un numero se encuentre dentro de dos numeros
+ * @param  {integer} num  Numero a comparar
+ * @param  {integer} from Numero desde
+ * @param  {integer} to   Numero hasta
+ * @return {integer | false }
+ */
 function between(num, from, to) {
     n = parseInt(num);
-    if (Number.isInteger(n) && n > from && n <= to) {
+    if (Number.isInteger(n) && n >= from && n <= to) {
         return n;
     }
     return false;
 }
 
+/**
+ * recibe un número en formato string o entero y retorna el número
+ * @param {string | integer} str Mes
+ * @example
+ * setNumber('tres'); // 3
+ * @return {integer}
+ */
+function setNumber(str) {
+    if (num = between(str, 1, 31)) {
+        return num;
+    }
+    var str = str.toLowerCase();
+    var numero = {
+        'un': 1,
+        'uno': 1,
+        'dos': 2,
+        'tres': 3,
+        'cuatro': 4,
+        'cinco': 5,
+        'seis': 6,
+        'siete': 7,
+        'ocho': 8,
+        'nueve': 9,
+        'diez': 10
+    }
+    return numero[str];
+}
 
-
-function strReplace(str) {
-
+/**
+ * recibe un mes en formato string o entero y retorna el número
+ * @param {string | integer} str Mes
+ * @example
+ * setNumber('marzo'); // 3
+ * @return {integer}
+ */
+function setMonth(str) {
     if (num = between(str, 1, 12)) {
         return num;
     }
-
     var str = str.toLowerCase();
-
-    var match;
-    var reps = {
+    var meses = {
         'ene': 1,
         'feb': 2,
         'mar': 3,
@@ -222,11 +245,7 @@ function strReplace(str) {
         'diciembre': 12
     };
 
-    str.replace(str, function(key, val) {
-        match = reps[key];
-    });
-
-    return match != undefined ? match : false;
+    return meses[str];
 }
 
 
@@ -236,6 +255,7 @@ function setData() {
         return false;
     }
 
+    // Resultado del match de la expresion regular
     result = this.matchFormat();
 
     var sep = this.separator;
@@ -244,44 +264,41 @@ function setData() {
     var year = this.date.getFullYear();
 
     // Obtengo el dia
-    day_list = [2, 8, 6, 19, 15, 12];
+    day_list = [2, 8, 6, 19, 15, 12, 31];
     for (i = 0; i <= day_list.length - 1; i++) {
-        if (result[parseInt(day_list[i])] !== undefined) {
-            var day = parseInt(result[day_list[i]]);
+        if (result[day_list[i]] !== undefined) {
+            var day = setNumber(result[day_list[i]]);
             break;
-        } else {
-            var day = false;
         }
     }
 
     // Obtengo el mes
-    month_list = [5, 3, 10, 18, 14, 13];
+    month_list = [5, 3, 10, 18, 14, 13, 33];
     for (i = 0; i <= month_list.length - 1; i++) {
         if (result[month_list[i]] !== undefined) {
-            var month = strReplace(result[month_list[i]]);
+            console.log(month_list[i]);
+            var month = setMonth(result[month_list[i]]);
             break;
-        } else {
-            var month = false;
         }
     }
 
     // Obtengo el año
     year_list = [4, 7, 11, 16];
     for (i = 0; i <= year_list.length - 1; i++) {
-        if (result[parseInt(year_list[i])] !== undefined) {
+        if (result[year_list[i]] !== undefined) {
             var year = parseInt(result[year_list[i]]);
             break;
         }
     }
 
-    // Si se escribió hoy o now.
+    // Si se escribió hoy / today.
     if (result[20] !== undefined) {
         var day = this.date.getDate();
         var month = this.date.getMonth() + 1;
         var year = this.date.getFullYear();
     }
 
-    // Si se escribió ayer
+    // Si se escribió ayer / yesterday
     if (result[22] !== undefined) {
         yesterday = addDays(this.date, -1);
         var day = yesterday.getDate();
@@ -289,7 +306,7 @@ function setData() {
         var year = yesterday.getFullYear();
     }
 
-    // Si se escribió mañana.
+    // Si se escribió mañana / tomorrow.
     if (result[21] !== undefined) {
         tomorrow = addDays(this.date, 1);
         var day = tomorrow.getDate();
@@ -299,39 +316,33 @@ function setData() {
 
     // Si se escribió "h?ace n" dias.
     if (result[25] !== undefined) {
-        tomorrow = addDays(this.date, -parseInt(result[25]));
+        tomorrow = addDays(this.date, -result[25]);
         var day = tomorrow.getDate();
-        var month = tomorrow.getMonth() + 1;
-        var year = tomorrow.getFullYear();
     }
 
-    // Si se escribió "hace un/uno" dias.
+    // Si se escribió "hace un/uno/dos..." dias.
     if (result[26] !== undefined) {
         var tomorrow = addDays(
-            this.date, -this.numeros[result[26].toLowerCase()]
+            this.date, -setNumber(result[26])
         );
         var day = tomorrow.getDate();
-        var month = tomorrow.getMonth() + 1;
-        var year = tomorrow.getFullYear();
     }
 
     // Si se escribió "en n" dias.
     if (result[29] !== undefined) {
-        var tomorrow = addDays(this.date, parseInt(result[29]));
+        var tomorrow = addDays(this.date, result[29]);
         var day = tomorrow.getDate();
-        var month = tomorrow.getMonth() + 1;
-        var year = tomorrow.getFullYear();
     }
 
-    // Si se escribió "en un/uno" dias...
+    // Si se escribió "en un/uno/dos..." dias.
     if (result[30] !== undefined || result[30]) {
         var tomorrow = addDays(this.date,
-            this.numeros[result[30].toLowerCase()]);
+            setNumber(result[30])
+        );
         var day = tomorrow.getDate();
-        var month = tomorrow.getMonth() + 1;
-        var year = tomorrow.getFullYear();
     }
 
+    // Objeto Date();
     date_obj = new Date(year, month - 1, day);
 
     // Praparo la información de retrono
@@ -353,6 +364,7 @@ function setData() {
  * zfill
  * @param  {integer} number
  * @param  {integer} width Cantidad de ceros
+ * @author Peter Bailey, <http://stackoverflow.com/a/1267338>
  * @return {string} 
  */
 function zeroFill(number, width) {
