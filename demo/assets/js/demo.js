@@ -36,7 +36,8 @@ function draw(str) {
 		}
 
 	} else {
-
+		$('.show-message').text(d.getData().message);
+		$('.alert').fadeIn();
 		$('#debug').append('<p>False</p>');
 		a.html('<span class="invalid">Inválido</i>').fadeIn();
 	}
@@ -48,10 +49,12 @@ function draw(str) {
 $('#sample').keydown(function() {
 	$('#resultados').fadeOut();
 	$('#debug').empty();
+	$('.alert').fadeOut();
 });
 
 $('.quick').click(function(e) {
 	e.preventDefault();
+	$('.alert').fadeOut();
 	var valor = $(this).data('action');
 	$('#sample').val(valor);
 	draw($('#sample').val());

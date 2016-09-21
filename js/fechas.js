@@ -16,8 +16,8 @@ function Fechas(str) {
     this.input = str;
     this.separator = '-';
     this.matchFormat = matchFormat;
-    this.isValid = isValid;
     this.getData = setData;
+    this.isValid = isValid;
     this.date = new Date();
     this.month_format = {
         1: {
@@ -118,7 +118,7 @@ function cleanup(str) {
  * @return {[type]} [description]
  */
 function matchFormat() {
-    var re = /^((3[0-1]|[0-2][\d]|[1-9])(?:\s|[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9])\9(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:\s|[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])|([\d]{4})(\-|\/|\.)(1[0-2]|0[\d]|[1-9])\17(3[0-1]|[0-2][\d]|[1-9])|(hoy|today)|(mañana|manana|tomorrow)|(ayer|yesterday)|(h?ace|\-)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(en|\+)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9]))$/i;
+    var re = /^((3[0-1]|[0-2][\d]|[1-9])(?:\s|[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9])\9(\d{4}|\d{2})|(3[0-1]|[0-2][\d]|[1-9])(?:[,.;\-\sd-e]+)(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)|(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)(?:\s|[,.;\-\sd-e]+)(3[0-1]|[0-2][\d]|[1-9])|([\d]{4})(\-|\/|\.)(1[0-2]|0[\d]|[1-9])\17(3[0-1]|[0-2][\d]|[1-9])|(hoy|today)|(mañana|manana|tomorrow)|(ayer|yesterday)|(h?ace|\-)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(en|dentro\s{1,3}de|\+)(\s{0,3})(?:(10|[1-9])|(uno?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez))[a-z\s]*|(3[0-1]|[0-2][\d]|[1-9])(\/|\-|\.)(1[0-2]|0[\d]|[1-9]))$/i;
     var input = cleanup(this.input);
     var result = input.match(re);
 
@@ -138,18 +138,7 @@ function isBisiesto(year) {
     if ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))) {
         return true;
     }
-
     return false;
-}
-/**
- * [dayRange description]
- * 30 dias tiene noviembre con abril junio y septiembre solo uno de 28 y 
- * los demas de 31 :)
- * @return {[type]} [description]
- */
-function dayRange() {
-    var d31 = [1, 3, 5, 7, 8, 10, 12];
-    var d30 = [11, 4, 6, 9];
 }
 
 /**
@@ -251,8 +240,10 @@ function setMonth(str) {
 
 function setData() {
 
-    if (!this.isValid) {
-        return false;
+    if (!this.matchFormat()) {
+        return {
+            'message': 'Formato de fecha incorrecto. Use formatos como: "dia/mes/año" o "dia de mes de año"'
+        };
     }
 
     // Resultado del match de la expresion regular
@@ -276,7 +267,6 @@ function setData() {
     month_list = [5, 3, 10, 18, 14, 13, 33];
     for (i = 0; i <= month_list.length - 1; i++) {
         if (result[month_list[i]] !== undefined) {
-            console.log(month_list[i]);
             var month = setMonth(result[month_list[i]]);
             break;
         }
@@ -345,6 +335,25 @@ function setData() {
     // Objeto Date();
     date_obj = new Date(year, month - 1, day);
 
+
+    var message;
+    var d30 = [11, 4, 6, 9];
+    if ( (d30.indexOf(month) >= 0) && parseInt(day) == 31) {
+        message = 'El mes de ' + this.month_format[month].normal +
+            ' no tiene 31 dias.';
+    }
+
+    if (!isBisiesto(year) && day == 29) {
+        message = 'El año ' + year + ', no es bisiesto. ¿Quiso poner 28 del ' +
+            year + '?';
+    }
+
+    if (message) {
+        return {
+            'message': message
+        };
+    }
+
     // Praparo la información de retrono
     var data = {
         day: date_obj.getDay(),
@@ -380,5 +389,9 @@ function zeroFill(number, width) {
  * @return {Boolean}
  */
 function isValid() {
-    return this.matchFormat() ? true : false;
+    var data = this.getData();
+    if (data.message !== undefined) {
+        return false;
+    }
+    return true;
 }

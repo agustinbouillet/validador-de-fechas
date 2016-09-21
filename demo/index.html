@@ -25,19 +25,38 @@
 								<input id="ver" type="submit" class="button" value="Validar">
 							</div>
 						</div>
-						<p class="help-text" id="passwordHelpText">
+
+<div class="alert callout small" data-closable style="display:none">
+<p class="show-message"></p>
+</div>
+
+
+						<p class="help-text">
 							Ej. 27/5/1977, 27 de mayo de 1977 ó mayo 27, 1977
 						</p>
-						<hr /><p>Atajos</p>
-						<div class="expanded button-group">
+											<h2 id="fecha" style="color:#1583cc; font-size: 1.5em; text-transform: capitalize;
+					"></h2>
+						<hr />
+						<p>Atajos</p>
+						<div class="expanded button-group round small">
 							<button type="button" class="secondary button quick" data-action="ayer">Ayer</button>
 							<button type="button" class="secondary button quick" data-action="hoy">Hoy</button>
 							<button type="button" class="secondary button quick" data-action="mañana">Mañana</button>
 						</div>
 						
+						<div class="expanded button-group round small">
+							<button type="button" class="secondary button quick" data-action="en dos dias">en dos dias</button>
+							<button type="button" class="secondary button quick" data-action="en 4">en 4</button>
+							<button type="button" class="secondary button quick" data-action="+6">+6</button>
+						</div>
+						<div class="expanded button-group round small">
+							<button type="button" class="secondary button quick" data-action="hace dos dias">hace dos dias</button>
+							<button type="button" class="secondary button quick" data-action="hace 4">hace 4</button>
+							<button type="button" class="secondary button quick" data-action="-6">-6</button>
+						</div>
+						
 					</form>
-					<h2 id="fecha" style="color:#1583cc; font-size: 1.5em; text-transform: capitalize;
-					"></h2>
+
 					<hr/>
 					<div><input type="text" readonly="readonly" id="read" value="" name=""></div>
 					<div id="debug"></div>
