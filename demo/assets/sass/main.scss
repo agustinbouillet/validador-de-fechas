@@ -1,0 +1,37 @@
+body {
+    padding: 1em;
+}
+
+.ejemplo {
+    li {
+        color: #1583cc;
+        cursor: pointer;
+        &:hover {
+            color: grey;
+            font-weight: 400;
+        }
+    }
+}
+
+table {
+    width: 100%;
+}
+
+h1 {
+    font-size: 1.75em;
+    color: grey;
+    font-weight: 300;
+    margin-bottom: 1em;
+}
+
+h2 {
+    font-size: 1.25em;
+    color: #2199e8;
+    font-weight: 500
+}
+
+h3 {
+    font-size: 1.1em;
+    color: #2199e8;
+    font-weight: 500
+}

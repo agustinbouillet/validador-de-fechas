@@ -336,8 +336,10 @@ function setData() {
     date_obj = new Date(year, month - 1, day);
 
 
+
+
     var message;
-    var d30 = [11, 4, 6, 9];
+    var d30 = [2, 11, 4, 6, 9];
     if ((d30.indexOf(month) >= 0) && parseInt(day) == 31) {
         message = 'El mes de ' + this.month_format[month].normal +
             ' no tiene 31 dias.';
